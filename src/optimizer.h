@@ -4,7 +4,7 @@
 
 #include "cint.h"
 
-#define NOVALUE                 ((void *)0xffffffffffffffffuL)
+#define NOVALUE                 ((PairData *)0xffffffffffffffffuL)
 #define MAX_PGTO_FOR_PAIRDATA   2048
 
 void CINTinit_2e_optimizer(CINTOpt **opt, FINT *atm, FINT natm,
