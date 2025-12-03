@@ -2,7 +2,7 @@
  * Copyright (C) 2013  Qiming Sun <osirpt.sun@gmail.com>
  *
  * optimizer for 2e integrals.  Note if CINT2e_drv is only called a few
- * hundred times, this optimizer cannot really speed up the integration. 
+ * hundred times, this optimizer cannot really speed up the integration.
  */
 
 #include <stdlib.h>
@@ -441,7 +441,7 @@ void CINTOpt_non0coeff_byshell(FINT *sortedidx, FINT *non0ctr, double *ci,
                                FINT iprim, FINT ictr)
 {
         FINT ip, j, k, kp;
-        FINT zeroidx[ictr];
+        FINT *zeroidx = (FINT *)malloc(sizeof(FINT) * ictr);
         for (ip = 0; ip < iprim; ip++) {
                 for (j = 0, k = 0, kp = 0; j < ictr; j++) {
                         if (ci[iprim*j+ip] != 0) {
