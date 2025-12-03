@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* <i|OVLP |SIGMA j> */
 void CINTgout1e_int1e_sigma(double *gout, double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty) {
 FINT nf = envs->nf;
@@ -2240,3 +2242,5 @@ return CINT1e_spinor_drv(out, dims, &envs, cache, &c2s_si_1e, 1);
 } // int1e_spgsa01_spinor
 ALL_CINT1E(int1e_spgsa01)
 ALL_CINT1E_FORTRAN_(int1e_spgsa01)
+
+} // end extern "C"

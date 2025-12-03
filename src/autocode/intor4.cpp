@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* <k SIGMA DOT P i|R12 |SIGMA DOT P j l> : i,j \in electron 1; k,l \in electron 2
  * = (SIGMA DOT P i SIGMA DOT P j|R12 |k l) */
 void CINTgout2e_int2e_spsp1(double *gout,
@@ -2492,3 +2494,5 @@ return CINT2e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_2e1, &c2s_sf_2e2)
 } // int2e_pp1pp2_spinor
 ALL_CINT(int2e_pp1pp2)
 ALL_CINT_FORTRAN_(int2e_pp1pp2)
+
+} // end extern "C"

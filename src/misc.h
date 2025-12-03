@@ -33,6 +33,7 @@ double CINTgto_norm(FINT n, double a);
 
 #ifdef WITH_CINT2_INTERFACE
 #define ALL_CINT(NAME) \
+extern "C" { \
 FINT c##NAME##_cart(double *out, FINT *shls, FINT *atm, FINT natm, \
             FINT *bas, FINT nbas, double *env, CINTOpt *opt) { \
         return NAME##_cart(out, NULL, shls, atm, natm, bas, nbas, env, opt, NULL); \
@@ -57,10 +58,12 @@ FINT c##NAME(double *out, FINT *shls, FINT *atm, FINT natm, \
 void c##NAME##_optimizer(CINTOpt **opt, FINT *atm, FINT natm, \
                          FINT *bas, FINT nbas, double *env) { \
         NAME##_optimizer(opt, atm, natm, bas, nbas, env); \
+} \
 }
 
 
 #define ALL_CINT1E(NAME) \
+extern "C" { \
 FINT c##NAME##_cart(double *out, FINT *shls, FINT *atm, FINT natm, \
             FINT *bas, FINT nbas, double *env) { \
         return NAME##_cart(out, NULL, shls, atm, natm, bas, nbas, env, NULL, NULL); \
@@ -73,6 +76,7 @@ FINT c##NAME(double *out, FINT *shls, FINT *atm, FINT natm, \
             FINT *bas, FINT nbas, double *env) { \
         return NAME##_spinor((double_complex *)out, NULL, shls, \
                              atm, natm, bas, nbas, env, NULL, NULL); \
+} \
 }
 
 #else
