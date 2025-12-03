@@ -169,7 +169,7 @@ FINT CINT1e_grids_loop(double *gctr, CINTEnvVars *envs, double *cache)
 
                                 envs->fac[0] = fac1i;
                                 CINTg0_1e_grids(g, cutoff, envs, cache, gridsT);
-                                (*envs->f_gout)(gout, g, idx, envs, *gempty);
+                                envs->f_gout(gout, g, idx, envs, *gempty);
                                 PRIM2CTR(i, gout, bgrids * nf * n_comp);
                         }
                         if (!*iempty) {
@@ -231,7 +231,7 @@ size_t int1e_grids_cache_size(CINTEnvVars *envs)
  * 1e integrals <i|O|j> without 1/r
  */
 CACHE_SIZE_T CINT1e_grids_drv(double *out, FINT *dims, CINTEnvVars *envs,
-                      double *cache, void (*f_c2s)())
+                      double *cache, CINTc2s_func_real f_c2s)
 {
         if (out == NULL) {
                 return int1e_grids_cache_size(envs);
@@ -270,7 +270,7 @@ CACHE_SIZE_T CINT1e_grids_drv(double *out, FINT *dims, CINTEnvVars *envs,
         FINT n;
         if (has_value) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < n_comp; n++) {
@@ -284,7 +284,7 @@ CACHE_SIZE_T CINT1e_grids_drv(double *out, FINT *dims, CINTEnvVars *envs,
 }
 
 CACHE_SIZE_T CINT1e_grids_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs,
-                             double *cache, void (*f_c2s)())
+                             double *cache, CINTc2s_func_complex f_c2s)
 {
         if (out == NULL) {
                 return int1e_grids_cache_size(envs);
@@ -315,7 +315,7 @@ CACHE_SIZE_T CINT1e_grids_spinor_drv(double_complex *out, FINT *dims, CINTEnvVar
         FINT n;
         if (has_value) {
                 for (n = 0; n < envs->ncomp_tensor; n++) {
-                        (*f_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < envs->ncomp_tensor; n++) {

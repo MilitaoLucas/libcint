@@ -153,7 +153,9 @@ typedef struct {
 
 // Add this macro def to make pyscf compatible with both v4 and v5
 #define HAVE_DEFINED_CINTENVVARS_H
-typedef struct {
+// Forward declaration for function pointer types
+struct CINTEnvVars;
+typedef struct CINTEnvVars {
         FINT *atm;
         FINT *bas;
         double *env;
@@ -207,9 +209,10 @@ typedef struct {
         // in int1e_grids, the pointer for the grids coordinates
         union {double *rl; double *grids;};
 
-        FINT (*f_g0_2e)(double *g, double *rij, double *rkl, double cutoff, CINTEnvVars *envs);
-        void (*f_g0_2d4d)(double *g, CINTEnvVars *envs);
-        void (*f_gout)(double *gout, double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty);
+        FINT (*f_g0_2e)(double *g, double *rij, double *rkl, double cutoff, struct CINTEnvVars *envs);
+        // f_g0_2d4d has different signatures for different algorithms, use void* cast
+        void *f_g0_2d4d;
+        void (*f_gout)(double *gout, double *g, FINT *idx, struct CINTEnvVars *envs, FINT gout_empty);
         CINTOpt *opt;
 
         /* values are assigned during calculation */
@@ -222,6 +225,10 @@ typedef struct {
         double rij[3];
         double rkl[3];
 } CINTEnvVars;
+#endif
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 FINT CINTlen_cart(const FINT l);
@@ -276,6 +283,10 @@ FINT cint2e(double *opijkl, FINT *shls,
            CINTOpt *opt);
 void cint2e_optimizer(CINTOpt **opt, FINT *atm, FINT natm,
                       FINT *bas, FINT nbas, double *env);
+
+#ifdef __cplusplus
+}
+#endif
 
 #ifndef __cplusplus
 #include <complex.h>

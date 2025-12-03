@@ -10,7 +10,7 @@ void CINTinit_int1e_EnvVars(CINTEnvVars *envs, FINT *ng, FINT *shls,
 void CINTinit_int3c1e_EnvVars(CINTEnvVars *envs, FINT *ng, FINT *shls,
                               FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env);
 
-void CINTg1e_index_xyz(FINT *idx, CINTEnvVars *envs);
+void CINTg1e_index_xyz(FINT *idx, const CINTEnvVars *envs);
 
 FINT CINTg1e_ovlp(double *g, CINTEnvVars *envs);
 

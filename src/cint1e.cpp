@@ -237,7 +237,7 @@ CACHE_SIZE_T CINT1e_drv(double *out, FINT *dims, CINTEnvVars *envs,
 }
 
 CACHE_SIZE_T CINT1e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs,
-                       double *cache, void (*f_c2s)(), FINT int1e_type)
+                       double *cache, CINTc2s_func_complex f_c2s, FINT int1e_type)
 {
         if (out == NULL) {
                 return int1e_cache_size(envs);
@@ -267,7 +267,7 @@ CACHE_SIZE_T CINT1e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *env
         FINT n;
         if (has_value) {
                 for (n = 0; n < envs->ncomp_tensor; n++) {
-                        (*f_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < envs->ncomp_tensor; n++) {
@@ -288,16 +288,16 @@ static void make_g1e_gout(double *gout, double *g, FINT *idx,
         switch (int1e_type) {
         case 0:
                 CINTg1e_ovlp(g, envs);
-                (*envs->f_gout)(gout, g, idx, envs, empty);
+                envs->f_gout(gout, g, idx, envs, empty);
                 break;
         case 1:
                 CINTg1e_nuc(g, envs, -1);
-                (*envs->f_gout)(gout, g, idx, envs, empty);
+                envs->f_gout(gout, g, idx, envs, empty);
                 break;
         case 2:
                 for (ia = 0; ia < envs->natm; ia++) {
                         CINTg1e_nuc(g, envs, ia);
-                        (*envs->f_gout)(gout, g, idx, envs, (empty && ia == 0));
+                        envs->f_gout(gout, g, idx, envs, (empty && ia == 0));
                 }
                 break;
         }

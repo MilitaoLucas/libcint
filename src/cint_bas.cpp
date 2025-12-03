@@ -92,13 +92,15 @@ FINT CINTtot_pgto_spinor(const FINT *bas, const FINT nbas)
         return s;
 }
 
-static FINT tot_cgto_accum(FINT (*f)(), const FINT *bas, const FINT nbas)
+typedef FINT (*CINTcgto_func)(FINT, const FINT *);
+
+static FINT tot_cgto_accum(CINTcgto_func f, const FINT *bas, const FINT nbas)
 {
         FINT i;
         FINT s = 0;
 
         for (i = 0; i < nbas; i++) {
-                s += (*f)(i, bas);
+                s += f(i, bas);
         }
         return s;
 }
@@ -126,13 +128,13 @@ FINT CINTtot_cgto_cart(const FINT *bas, const FINT nbas)
         return tot_cgto_accum(&CINTcgto_cart, bas, nbas);
 }
 
-static void shells_cgto_offset(FINT (*f)(), FINT ao_loc[],
+static void shells_cgto_offset(CINTcgto_func f, FINT ao_loc[],
                                const FINT *bas, const FINT nbas)
 {
         FINT i;
         ao_loc[0] = 0;
         for (i = 1; i < nbas; i++) {
-                ao_loc[i] = ao_loc[i-1] + (*f)(i-1, bas);
+                ao_loc[i] = ao_loc[i-1] + f(i-1, bas);
         }
 }
 /*

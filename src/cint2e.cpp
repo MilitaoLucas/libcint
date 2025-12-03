@@ -242,8 +242,8 @@ FINT CINT2e_loop_nopt(double *gctr, CINTEnvVars *envs, double *cache, FINT *empt
                                                 fac1i = fac1j*expijkl;
                                         }
                                         envs->fac[0] = fac1i;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, *gempty);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, *gempty);
                                                 PRIM2CTR(i, gout, len0);
                                         }
 i_contracted: ;
@@ -420,8 +420,8 @@ FINT CINT2e_1111_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empt
                                         fac1i = fac1j*ci[ip]*expij*expkl;
                                         envs->fac[0] = fac1i;
                                         cutoff = eijcutoff - pdata_ij->cceij;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, *gempty);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, *gempty);
                                                 *gempty = 0;
                                         }
 i_contracted: ;
@@ -474,8 +474,8 @@ FINT CINT2e_n111_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empt
                                         cutoff = eijcutoff - pdata_ij->cceij;
                                         fac1i = fac1j*expij*expkl;
                                         envs->fac[0] = fac1i;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, 1);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, 1);
                                                 PRIM2CTR(i, gout, len0);
                                         }
 i_contracted: ;
@@ -526,8 +526,8 @@ FINT CINT2e_1n11_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empt
                                         cutoff = eijcutoff - pdata_ij->cceij;
                                         fac1i = fac1j*ci[ip]*expij*expkl;
                                         envs->fac[0] = fac1i;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, *iempty);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, *iempty);
                                                 *iempty = 0;
                                         }
 i_contracted: ;
@@ -581,8 +581,8 @@ FINT CINT2e_11n1_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empt
                                         cutoff = eijcutoff - pdata_ij->cceij;
                                         fac1i = fac1j*ci[ip]*expij*expkl;
                                         envs->fac[0] = fac1i;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, *jempty);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, *jempty);
                                                 *jempty = 0;
                                         }
 i_contracted: ;
@@ -636,8 +636,8 @@ FINT CINT2e_111n_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empt
                                         cutoff = eijcutoff - pdata_ij->cceij;
                                         fac1i = fac1j*ci[ip]*expij*expkl;
                                         envs->fac[0] = fac1i;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, *kempty);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, *kempty);
                                                 *kempty = 0;
                                         }
 i_contracted: ;
@@ -731,8 +731,8 @@ FINT CINT2e_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empty)
                                                 fac1i = fac1j * expij*expkl;
                                         }
                                         envs->fac[0] = fac1i;
-                                        if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
-                                                (*envs->f_gout)(gout, g, idx, envs, *gempty);
+                                        if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
+                                                envs->f_gout(gout, g, idx, envs, *gempty);
                                                 PRIM2CTR(i, gout, len0);
                                         }
 i_contracted: ;
@@ -792,7 +792,7 @@ static FINT (*CINTf_2e_loop[16])(double *, CINTEnvVars *, double *, FINT *) = {
                            +(i_prim+j_prim+k_prim+l_prim)*2 + nf*3);
 
 CACHE_SIZE_T CINT2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                      double *cache, void (*f_c2s)())
+                      double *cache, CINTc2s_func_real f_c2s)
 {
         FINT *x_ctr = envs->x_ctr;
         size_t nf = envs->nf;
@@ -856,7 +856,7 @@ CACHE_SIZE_T CINT2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt
         FINT nout = dims[0] * dims[1] * dims[2] * dims[3];
         if (!empty) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < n_comp; n++) {
@@ -869,7 +869,7 @@ CACHE_SIZE_T CINT2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt
         return !empty;
 }
 CACHE_SIZE_T CINT2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                      double *cache, void (*f_e1_c2s)(), void (*f_e2_c2s)())
+                      double *cache, CINTc2s_func_real f_e1_c2s, CINTc2s_2e2_func f_e2_c2s)
 {
         FINT *shls = envs->shls;
         FINT *bas = envs->bas;
@@ -935,10 +935,10 @@ CACHE_SIZE_T CINT2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *env
                 MALLOC_INSTACK(opij, n1*envs->ncomp_e2);
                 for (n = 0; n < envs->ncomp_tensor; n++) {
                         for (m = 0; m < envs->ncomp_e2; m++) {
-                                (*f_e1_c2s)(opij+n1*m, gctr, dims, envs, cache);
+                                f_e1_c2s((double *)(opij+n1*m), gctr, dims, envs, cache);
                                 gctr += nc * envs->ncomp_e1;
                         }
-                        (*f_e2_c2s)(out+nout*n, opij, dims, envs, cache);
+                        f_e2_c2s(out+nout*n, (double *)opij, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < envs->ncomp_tensor; n++) {

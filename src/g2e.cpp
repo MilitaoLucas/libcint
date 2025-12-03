@@ -151,21 +151,21 @@ void CINTinit_int2e_EnvVars(CINTEnvVars *envs, FINT *ng, FINT *shls,
         }
 
         if (rys_order <= 2) {
-                envs->f_g0_2d4d = &CINTg0_2e_2d4d_unrolled;
+                envs->f_g0_2d4d = (void *)&CINTg0_2e_2d4d_unrolled;
                 if (rys_order != nrys_roots) {
-                        envs->f_g0_2d4d = &CINTsrg0_2e_2d4d_unrolled;
+                        envs->f_g0_2d4d = (void *)&CINTsrg0_2e_2d4d_unrolled;
                 }
         } else if (kbase) {
                 if (ibase) {
-                        envs->f_g0_2d4d = &CINTg0_2e_ik2d4d;
+                        envs->f_g0_2d4d = (void *)&CINTg0_2e_ik2d4d;
                 } else {
-                        envs->f_g0_2d4d = &CINTg0_2e_kj2d4d;
+                        envs->f_g0_2d4d = (void *)&CINTg0_2e_kj2d4d;
                 }
         } else {
                 if (ibase) {
-                        envs->f_g0_2d4d = &CINTg0_2e_il2d4d;
+                        envs->f_g0_2d4d = (void *)&CINTg0_2e_il2d4d;
                 } else {
-                        envs->f_g0_2d4d = &CINTg0_2e_lj2d4d;
+                        envs->f_g0_2d4d = (void *)&CINTg0_2e_lj2d4d;
                 }
         }
         envs->f_g0_2e = &CINTg0_2e;
@@ -4563,7 +4563,7 @@ FINT CINTg0_2e(double *g, double *rij, double *rkl, double cutoff, CINTEnvVars *
                 w[irys] *= fac1;
         }
 
-        (*envs->f_g0_2d4d)(g, &bc, envs);
+        ((void (*)(double *, Rys2eT *, CINTEnvVars *))envs->f_g0_2d4d)(g, &bc, envs);
 
         return 1;
 }

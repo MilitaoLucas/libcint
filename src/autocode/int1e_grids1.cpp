@@ -68,7 +68,7 @@ CINTinit_int1e_grids_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
 envs.f_gout = &CINTgout1e_int1e_grids_ip;
 return CINT1e_grids_drv(out, dims, &envs, cache, &c2s_sph_1e_grids);
 } // int1e_grids_ip_sph
-CACHE_SIZE_T int1e_grids_ip_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_grids_ip_spinor(double_complex *out, FINT *dims, FINT *shls,
 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
 FINT ng[] = {1, 0, 0, 0, 1, 1, 0, 3};
 CINTEnvVars envs;
@@ -154,7 +154,7 @@ CINTinit_int1e_grids_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
 envs.f_gout = &CINTgout1e_int1e_grids_ipvip;
 return CINT1e_grids_drv(out, dims, &envs, cache, &c2s_sph_1e_grids);
 } // int1e_grids_ipvip_sph
-CACHE_SIZE_T int1e_grids_ipvip_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_grids_ipvip_spinor(double_complex *out, FINT *dims, FINT *shls,
 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
 FINT ng[] = {1, 1, 0, 0, 2, 1, 0, 9};
 CINTEnvVars envs;
@@ -230,7 +230,7 @@ CINTinit_int1e_grids_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
 envs.f_gout = &CINTgout1e_int1e_grids_spvsp;
 return CINT1e_grids_drv(out, dims, &envs, cache, &c2s_sph_1e_grids);
 } // int1e_grids_spvsp_sph
-CACHE_SIZE_T int1e_grids_spvsp_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_grids_spvsp_spinor(double_complex *out, FINT *dims, FINT *shls,
 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
 FINT ng[] = {1, 1, 0, 0, 2, 4, 0, 1};
 CINTEnvVars envs;
@@ -316,7 +316,7 @@ CINTinit_int1e_grids_EnvVars(&envs, ng, shls, atm, natm, bas, nbas, env);
 envs.f_gout = &CINTgout1e_int1e_grids_ipip;
 return CINT1e_grids_drv(out, dims, &envs, cache, &c2s_sph_1e_grids);
 } // int1e_grids_ipip_sph
-CACHE_SIZE_T int1e_grids_ipip_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_grids_ipip_spinor(double_complex *out, FINT *dims, FINT *shls,
 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
 FINT ng[] = {2, 0, 0, 0, 2, 1, 0, 9};
 CINTEnvVars envs;

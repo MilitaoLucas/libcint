@@ -261,7 +261,7 @@ k_contracted: ;
                            + envs->nf*3);
 
 CACHE_SIZE_T CINT4c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                          double *cache, void (*f_c2s)())
+                          double *cache, void f_c2s())
 {
         FINT *x_ctr = envs->x_ctr;
         size_t nc = envs->nf * x_ctr[0] * x_ctr[1] * x_ctr[2] * x_ctr[3];
@@ -308,7 +308,7 @@ CACHE_SIZE_T CINT4c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
         FINT nout = dims[0] * dims[1] * dims[2] * dims[3];
         if (has_value) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < n_comp; n++) {

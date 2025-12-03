@@ -189,7 +189,7 @@ FINT CINT3c2e_loop_nopt(double *gctr, CINTEnvVars *envs, double *cache, FINT *em
                                         fac1i = fac1j*expij;
                                 }
                                 envs->fac[0] = fac1i;
-                                if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
+                                if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
                                         (*envs->f_gout)(gout, g, idx, envs, *gempty);
                                         PRIM2CTR0(i, gout, len0);
                                 }
@@ -353,7 +353,7 @@ FINT CINT3c2e_111_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *emp
                                 cutoff = expcutoff - pdata_ij->cceij;
                                 fac1i = fac1j*ci[ip]*expij;
                                 envs->fac[0] = fac1i;
-                                if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
+                                if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
                                         (*envs->f_gout)(gout, g, idx, envs, *gempty);
                                         *gempty = 0;
                                 }
@@ -397,7 +397,7 @@ FINT CINT3c2e_n11_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *emp
                                 cutoff = expcutoff - pdata_ij->cceij;
                                 fac1i = fac1j*expij;
                                 envs->fac[0] = fac1i;
-                                if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
+                                if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
                                         (*envs->f_gout)(gout, g, idx, envs, 1);
                                         PRIM2CTR(i, gout, len0);
                                 }
@@ -442,7 +442,7 @@ FINT CINT3c2e_1n1_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *emp
                                 cutoff = expcutoff - pdata_ij->cceij;
                                 fac1i = fac1j*ci[ip]*expij;
                                 envs->fac[0] = fac1i;
-                                if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
+                                if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
                                         (*envs->f_gout)(gout, g, idx, envs, *iempty);
                                         *iempty = 0;
                                 }
@@ -509,7 +509,7 @@ FINT CINT3c2e_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empty)
                                         fac1i = fac1j*expij;
                                 }
                                 envs->fac[0] = fac1i;
-                                if ((*envs->f_g0_2e)(g, rij, rkl, cutoff, envs)) {
+                                if (envs->f_g0_2e(g, rij, rkl, cutoff, envs)) {
                                         (*envs->f_gout)(gout, g, idx, envs, *gempty);
                                         PRIM2CTR(i, gout, len0);
                                 }
@@ -554,7 +554,7 @@ static FINT (*CINTf_3c2e_loop[8])(double *, CINTEnvVars *, double *, FINT *) = {
                            +(i_prim+j_prim)*2 + k_prim + envs->nf*3 + 16);
 
 CACHE_SIZE_T CINT3c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                         double *cache, void (*f_e1_c2s)(), FINT is_ssc)
+                         double *cache, CINTc2s_func_real f_e1_c2s, FINT is_ssc)
 {
         FINT *x_ctr = envs->x_ctr;
         size_t nc = envs->nf * x_ctr[0] * x_ctr[1] * x_ctr[2];
@@ -611,7 +611,7 @@ CACHE_SIZE_T CINT3c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
         FINT nout = dims[0] * dims[1] * dims[2];
         if (!empty) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_e1_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_e1_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < n_comp; n++) {
@@ -624,7 +624,7 @@ CACHE_SIZE_T CINT3c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
         return !empty;
 }
 CACHE_SIZE_T CINT3c2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                        double *cache, void (*f_e1_c2s)(), FINT is_ssc)
+                        double *cache, CINTc2s_func_complex f_e1_c2s, FINT is_ssc)
 {
         FINT *x_ctr = envs->x_ctr;
         FINT counts[4];
@@ -675,7 +675,7 @@ CACHE_SIZE_T CINT3c2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *e
         FINT nout = dims[0] * dims[1] * dims[2];
         if (!empty) {
                 for (n = 0; n < envs->ncomp_e2 * envs->ncomp_tensor; n++) {
-                        (*f_e1_c2s)(out+nout*n, gctr, dims, envs, cache);
+                        f_e1_c2s(out+nout*n, gctr, dims, envs, cache);
                         gctr += nc * envs->ncomp_e1;
                 }
         } else {

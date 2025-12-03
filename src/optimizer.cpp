@@ -18,6 +18,10 @@
 #include "optimizer.h"
 #include "misc.h"
 
+// Function pointer typedefs for gen_idx
+typedef void (*CINTinit_func)(CINTEnvVars *, FINT *, FINT *, FINT *, FINT, FINT *, FINT, double *);
+typedef void (*CINTindex_xyz_func)(FINT *, const CINTEnvVars *);
+
 // generate caller to CINTinit_2e_optimizer for each type of function
 void CINTinit_2e_optimizer(CINTOpt **opt, FINT *atm, FINT natm,
                            FINT *bas, FINT nbas, double *env)
@@ -115,7 +119,7 @@ static FINT *_allocate_index_xyz(CINTOpt *opt, FINT max_l, FINT l_allow, FINT or
         opt->index_xyz_array = ppbuf;
         return buf;
 }
-static void gen_idx(CINTOpt *opt, void (*finit)(), void (*findex_xyz)(),
+static void gen_idx(CINTOpt *opt, CINTinit_func finit, CINTindex_xyz_func findex_xyz,
                     FINT order, FINT l_allow, FINT *ng,
                     FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env)
 {
@@ -133,10 +137,10 @@ static void gen_idx(CINTOpt *opt, void (*finit)(), void (*findex_xyz)(),
                 for (i = 0; i <= l_allow; i++) {
                 for (j = 0; j <= l_allow; j++) {
                         shls[0] = i; shls[1] = j;
-                        (*finit)(&envs, ng, shls, atm, natm, fakebas, fakenbas, env);
+                        finit(&envs, ng, shls, atm, natm, fakebas, fakenbas, env);
                         ptr = i*LMAX1 + j;
                         opt->index_xyz_array[ptr] = buf;
-                        (*findex_xyz)(buf, &envs);
+                        findex_xyz(buf, &envs);
                         buf += envs.nf * 3;
                 } }
 
@@ -145,10 +149,10 @@ static void gen_idx(CINTOpt *opt, void (*finit)(), void (*findex_xyz)(),
                 for (j = 0; j <= l_allow; j++) {
                 for (k = 0; k <= l_allow; k++) {
                         shls[0] = i; shls[1] = j; shls[2] = k;
-                        (*finit)(&envs, ng, shls, atm, natm, fakebas, fakenbas, env);
+                        finit(&envs, ng, shls, atm, natm, fakebas, fakenbas, env);
                         ptr = i*LMAX1*LMAX1 + j*LMAX1 + k;
                         opt->index_xyz_array[ptr] = buf;
-                        (*findex_xyz)(buf, &envs);
+                        findex_xyz(buf, &envs);
                         buf += envs.nf * 3;
                 } } }
 
@@ -158,13 +162,13 @@ static void gen_idx(CINTOpt *opt, void (*finit)(), void (*findex_xyz)(),
                 for (k = 0; k <= l_allow; k++) {
                 for (l = 0; l <= l_allow; l++) {
                         shls[0] = i; shls[1] = j; shls[2] = k; shls[3] = l;
-                        (*finit)(&envs, ng, shls, atm, natm, fakebas, fakenbas, env);
+                        finit(&envs, ng, shls, atm, natm, fakebas, fakenbas, env);
                         ptr = i*LMAX1*LMAX1*LMAX1
                             + j*LMAX1*LMAX1
                             + k*LMAX1
                             + l;
                         opt->index_xyz_array[ptr] = buf;
-                        (*findex_xyz)(buf, &envs);
+                        findex_xyz(buf, &envs);
                         buf += envs.nf * 3;
                 } } } }
         }

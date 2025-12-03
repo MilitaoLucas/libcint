@@ -19,6 +19,11 @@
 #include "misc.h"
 #include "c2f.h"
 
+// Function pointer typedef for breit integral functions
+typedef FINT (*CINTbreit_func)(double_complex *out, FINT *dims, FINT *shls,
+                               FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env,
+                               CINTOpt *opt, double *cache);
+
 #define DECLARE(X)      FINT X(double_complex *out, FINT *dims, FINT *shls, \
                               FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, \
                               CINTOpt *opt, double *cache)
@@ -82,12 +87,12 @@ static void _copy_to_out(double_complex *out, double_complex *in, FINT *dims, FI
 static CACHE_SIZE_T _int2e_breit_drv(double_complex *out, FINT *dims, FINT *shls,
                             FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env,
                             CINTOpt *opt, double *cache, FINT ncomp_tensor,
-                            FINT (*f_gaunt)(), FINT (*f_gauge_r1)(), FINT (*f_gauge_r2)())
+                            CINTbreit_func f_gaunt, CINTbreit_func f_gauge_r1, CINTbreit_func f_gauge_r2)
 {
         if (out == NULL) {
-                CACHE_SIZE_T cache_size1 = (*f_gauge_r1)(NULL, NULL, shls,
+                CACHE_SIZE_T cache_size1 = f_gauge_r1(NULL, NULL, shls,
                                 atm, natm, bas, nbas, env, NULL, cache);
-                CACHE_SIZE_T cache_size2 = (*f_gauge_r2)(NULL, NULL, shls,
+                CACHE_SIZE_T cache_size2 = f_gauge_r2(NULL, NULL, shls,
                                 atm, natm, bas, nbas, env, NULL, cache);
                 return MAX(cache_size1, cache_size2);
         }
@@ -107,10 +112,10 @@ static CACHE_SIZE_T _int2e_breit_drv(double_complex *out, FINT *dims, FINT *shls
                 buf1 = buf + nop;
         }
 
-        FINT has_value = (*f_gaunt)(buf1, NULL, shls, atm, natm, bas, nbas, env, NULL, cache);
+        FINT has_value = f_gaunt(buf1, NULL, shls, atm, natm, bas, nbas, env, NULL, cache);
 
         FINT i;
-        has_value = ((*f_gauge_r1)(buf, NULL, shls, atm, natm, bas, nbas, env, NULL, cache) ||
+        has_value = (f_gauge_r1(buf, NULL, shls, atm, natm, bas, nbas, env, NULL, cache) ||
                      has_value);
         /* [1/2 gaunt] - [1/2 xxx*\sigma1\dot r1] */
         if (has_value) {
@@ -119,7 +124,7 @@ static CACHE_SIZE_T _int2e_breit_drv(double_complex *out, FINT *dims, FINT *shls
                 }
         }
         /* ... [- 1/2 xxx*\sigma1\dot(-r2)] */
-        has_value = ((*f_gauge_r2)(buf, NULL, shls, atm, natm, bas, nbas, env, NULL, cache) ||
+        has_value = (f_gauge_r2(buf, NULL, shls, atm, natm, bas, nbas, env, NULL, cache) ||
                      has_value);
         if (has_value) {
                 for (i = 0; i < nop; i++) {

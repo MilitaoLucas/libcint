@@ -363,7 +363,7 @@ FINT CINT3c1e_nuc_loop_nopt(double *gctr, CINTEnvVars *envs,
                            + envs->nf*3);
 
 CACHE_SIZE_T CINT3c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                         double *cache, void (*f_e1_c2s)(), FINT int_type, FINT is_ssc)
+                         double *cache, CINTc2s_func_real f_e1_c2s, FINT int_type, FINT is_ssc)
 {
         FINT *x_ctr = envs->x_ctr;
         FINT nc = envs->nf * x_ctr[0] * x_ctr[1] * x_ctr[2];
@@ -433,7 +433,7 @@ CACHE_SIZE_T CINT3c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
         FINT nout = dims[0] * dims[1] * dims[2];
         if (!empty) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_e1_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_e1_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < n_comp; n++) {
@@ -448,7 +448,7 @@ CACHE_SIZE_T CINT3c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
 
 // TODO: ssc type c2s transformation
 CACHE_SIZE_T CINT3c1e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                        double *cache, void (*f_e1_c2s)(), FINT int_type, FINT is_ssc)
+                        double *cache, CINTc2s_func_real f_e1_c2s, FINT int_type, FINT is_ssc)
 {
         fprintf(stderr, "CINT3c1e_spinor_drv not implemented");
         exit(1);

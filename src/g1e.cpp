@@ -86,7 +86,7 @@ void CINTinit_int1e_EnvVars(CINTEnvVars *envs, FINT *ng, FINT *shls,
         assert(envs->nrys_roots < MXRYSROOTS);
 }
 
-void CINTg1e_index_xyz(FINT *idx, CINTEnvVars *envs)
+void CINTg1e_index_xyz(FINT *idx, const CINTEnvVars *envs)
 {
         const FINT i_l = envs->i_l;
         const FINT j_l = envs->j_l;

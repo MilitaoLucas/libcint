@@ -236,7 +236,7 @@ FINT CINT2c2e_loop(double *gctr, CINTEnvVars *envs, double *cache, FINT *empty)
 }
 
 CACHE_SIZE_T CINT2c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                          double *cache, void (*f_c2s)())
+                          double *cache, CINTc2s_func_real f_c2s)
 {
         FINT *x_ctr = envs->x_ctr;
         FINT nc = envs->nf * x_ctr[0] * x_ctr[1];
@@ -278,7 +278,7 @@ CACHE_SIZE_T CINT2c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
         FINT nout = dims[0] * dims[1];
         if (!empty) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_c2s)(out+nout*n, gctr+nc*n, dims, envs, cache);
+                        f_c2s(out+nout*n, gctr+nc*n, dims, envs, cache);
                 }
         } else {
                 for (n = 0; n < n_comp; n++) {
@@ -292,7 +292,7 @@ CACHE_SIZE_T CINT2c2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
 }
 // (spinor|spinor)
 CACHE_SIZE_T CINT2c2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                        double *cache, void (*f_e1_c2s)())
+                        double *cache, CINTc2s_func_complex f_e1_c2s)
 {
         if (envs->ncomp_e1 > 1 || envs->ncomp_e2 > 1) {
                 fprintf(stderr, "CINT2c2e_spinor_drv not implemented\n");
@@ -333,7 +333,7 @@ CACHE_SIZE_T CINT2c2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *e
         FINT nout = dims[0] * dims[1];
         if (!empty) {
                 for (n = 0; n < n_comp; n++) {
-                        (*f_e1_c2s)(out+nout*n, gctr, dims, envs, cache);
+                        f_e1_c2s(out+nout*n, gctr, dims, envs, cache);
                         gctr += nc;
                 }
         } else {

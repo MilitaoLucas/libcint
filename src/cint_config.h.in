@@ -27,6 +27,8 @@ typedef double complex double_complex;
 // Function pointer types for c2s transformations
 typedef void (*CINTc2s_func_real)(double *out, double *gctr, FINT *dims, CINTEnvVars *envs, double *cache);
 typedef void (*CINTc2s_func_complex)(double_complex *out, double *gctr, FINT *dims, CINTEnvVars *envs, double *cache);
+// For 2e spinor transformations, e2 function takes double* as second arg
+typedef void (*CINTc2s_2e2_func)(double_complex *out, double *opij, FINT *dims, CINTEnvVars *envs, double *cache);
 
 // ng[*]
 #define IINC            0
