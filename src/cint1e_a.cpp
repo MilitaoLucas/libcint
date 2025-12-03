@@ -60,7 +60,7 @@ CACHE_SIZE_T int1e_r2_origi_sph(double *out, FINT *dims, FINT *shls,
         envs.f_gout = &CINTgout1e_int1e_r2_origi;
         return CINT1e_drv(out, dims, &envs, cache, &c2s_sph_1e, 0);
 } // int1e_r2_origi_sph
-CACHE_SIZE_T int1e_r2_origi_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_r2_origi_spinor(double_complex *out, FINT *dims, FINT *shls,
                 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
         FINT ng[] = {2, 0, 0, 0, 2, 1, 1, 1};
         CINTEnvVars envs;
@@ -136,7 +136,7 @@ CACHE_SIZE_T int1e_r4_origi_sph(double *out, FINT *dims, FINT *shls,
         envs.f_gout = &CINTgout1e_int1e_r4_origi;
         return CINT1e_drv(out, dims, &envs, cache, &c2s_sph_1e, 0);
 } // int1e_r4_origi_sph
-CACHE_SIZE_T int1e_r4_origi_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_r4_origi_spinor(double_complex *out, FINT *dims, FINT *shls,
                 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
         FINT ng[] = {4, 0, 0, 0, 4, 1, 1, 1};
         CINTEnvVars envs;
@@ -203,7 +203,7 @@ CACHE_SIZE_T int1e_r2_origi_ip2_sph(double *out, FINT *dims, FINT *shls,
         envs.f_gout = &CINTgout1e_int1e_r2_origi_ip2;
         return CINT1e_drv(out, dims, &envs, cache, &c2s_sph_1e, 0);
 } // int1e_r2_origi_ip2_sph
-CACHE_SIZE_T int1e_r2_origi_ip2_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_r2_origi_ip2_spinor(double_complex *out, FINT *dims, FINT *shls,
                 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
         FINT ng[] = {2, 1, 0, 0, 3, 1, 1, 3};
         CINTEnvVars envs;
@@ -305,7 +305,7 @@ CACHE_SIZE_T int1e_r4_origi_ip2_sph(double *out, FINT *dims, FINT *shls,
         envs.f_gout = &CINTgout1e_int1e_r4_origi_ip2;
         return CINT1e_drv(out, dims, &envs, cache, &c2s_sph_1e, 0);
 } // int1e_r4_origi_ip2_sph
-CACHE_SIZE_T int1e_r4_origi_ip2_spinor(double complex *out, FINT *dims, FINT *shls,
+CACHE_SIZE_T int1e_r4_origi_ip2_spinor(double_complex *out, FINT *dims, FINT *shls,
                 FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache) {
         FINT ng[] = {4, 1, 0, 0, 5, 1, 1, 3};
         CINTEnvVars envs;

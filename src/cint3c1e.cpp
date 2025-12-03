@@ -383,7 +383,7 @@ CACHE_SIZE_T CINT3c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
                 size_t len0 = envs->nf*n_comp;
                 FINT cache_size = MAX(leng+len0+nc*n_comp*4 + pdata_size,
                                       nc*n_comp+envs->nf*3);
-                stack = malloc(sizeof(double)*cache_size);
+                stack = (double *)malloc(sizeof(double)*cache_size);
                 cache = stack;
         }
         double *gctr;
@@ -447,7 +447,7 @@ CACHE_SIZE_T CINT3c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
 }
 
 // TODO: ssc type c2s transformation
-CACHE_SIZE_T CINT3c1e_spinor_drv(double complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
+CACHE_SIZE_T CINT3c1e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
                         double *cache, void (*f_e1_c2s)(), FINT int_type, FINT is_ssc)
 {
         fprintf(stderr, "CINT3c1e_spinor_drv not implemented");
@@ -481,7 +481,7 @@ CACHE_SIZE_T int3c1e_cart(double *out, FINT *dims, FINT *shls, FINT *atm, FINT n
         return CINT3c1e_drv(out, dims, &envs, opt, cache, &c2s_cart_3c1e, 0, 0);
 }
 
-CACHE_SIZE_T int3c1e_spinor(double complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
+CACHE_SIZE_T int3c1e_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                    FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
         FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};
@@ -516,7 +516,7 @@ CACHE_SIZE_T int3c1e_rinv_cart(double *out, FINT *dims, FINT *shls, FINT *atm, F
         return CINT3c1e_drv(out, dims, &envs, opt, cache, &c2s_cart_3c1e, 1, 0);
 }
 
-CACHE_SIZE_T int3c1e_rinv_spinor(double complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
+CACHE_SIZE_T int3c1e_rinv_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                          FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
         FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};

@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.15)
-project (cint C)
+project (cint CXX)
 set(cint_VERSION_MAJOR "6")
 set(cint_VERSION_MINOR "1")
 set(cint_VERSION_PATCH "3")
@@ -15,26 +15,27 @@ else()
 endif()
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-option(BUILD_MARCH_NATIVE "gcc flag -march=native" off)
+option(BUILD_MARCH_NATIVE "gcc/g++ flag -march=native" off)
 if (BUILD_MARCH_NATIVE)
-  include(CheckCCompilerFlag)
-  CHECK_C_COMPILER_FLAG("-march=native" COMPILER_SUPPORTS_MARCH_NATIVE)
+  include(CheckCXXCompilerFlag)
+  CHECK_CXX_COMPILER_FLAG("-march=native" COMPILER_SUPPORTS_MARCH_NATIVE)
   if(COMPILER_SUPPORTS_MARCH_NATIVE)
-    if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel")
-      message("Add CFLAGS -march=native -unroll-aggressive")
-      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -unroll-aggressive -ipo")
-      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-math-errno")
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+      message("Add CXXFLAGS -march=native -unroll-aggressive")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -unroll-aggressive -ipo")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-math-errno")
     else()
-      message("Add CFLAGS -march=native -ftree-vectorize")
-      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native -funroll-loops -ftree-vectorize")
-      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-math-errno")
+      message("Add CXXFLAGS -march=native -ftree-vectorize")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -funroll-loops -ftree-vectorize")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-math-errno")
     endif()
   endif()
 endif()
 
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O2 -DNDEBUG")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O2 -DNDEBUG")
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GNUInstallDirs)
 #set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -64,19 +65,19 @@ configure_file(
   "${PROJECT_BINARY_DIR}/include/cint.h")
 
 set(cintSrc
-  src/c2f.c src/cart2sph.c src/cint1e.c src/cint2e.c src/cint_bas.c
-  src/fblas.c src/g1e.c src/g2e.c src/misc.c src/optimizer.c
-  src/fmt.c src/rys_wheeler.c src/eigh.c src/rys_roots.c src/find_roots.c
-  src/cint2c2e.c src/g2c2e.c src/cint3c2e.c src/g3c2e.c
-  src/cint3c1e.c src/g3c1e.c src/breit.c
-  src/cint1e_a.c src/cint3c1e_a.c
-  src/cint1e_grids.c src/g1e_grids.c
-  src/autocode/breit1.c src/autocode/dkb.c src/autocode/gaunt1.c
-  src/autocode/grad1.c src/autocode/grad2.c src/autocode/hess.c
-  src/autocode/int3c1e.c src/autocode/int3c2e.c src/autocode/intor1.c
-  src/autocode/intor2.c src/autocode/intor3.c src/autocode/intor4.c
-  src/autocode/deriv3.c src/autocode/int1e_grids1.c
-  src/autocode/deriv4.c src/autocode/lresc.c)
+  src/c2f.cpp src/cart2sph.cpp src/cint1e.cpp src/cint2e.cpp src/cint_bas.cpp
+  src/fblas.cpp src/g1e.cpp src/g2e.cpp src/misc.cpp src/optimizer.cpp
+  src/fmt.cpp src/rys_wheeler.cpp src/eigh.cpp src/rys_roots.cpp src/find_roots.cpp
+  src/cint2c2e.cpp src/g2c2e.cpp src/cint3c2e.cpp src/g3c2e.cpp
+  src/cint3c1e.cpp src/g3c1e.cpp src/breit.cpp
+  src/cint1e_a.cpp src/cint3c1e_a.cpp
+  src/cint1e_grids.cpp src/g1e_grids.cpp
+  src/autocode/breit1.cpp src/autocode/dkb.cpp src/autocode/gaunt1.cpp
+  src/autocode/grad1.cpp src/autocode/grad2.cpp src/autocode/hess.cpp
+  src/autocode/int3c1e.cpp src/autocode/int3c2e.cpp src/autocode/intor1.cpp
+  src/autocode/intor2.cpp src/autocode/intor3.cpp src/autocode/intor4.cpp
+  src/autocode/deriv3.cpp src/autocode/int1e_grids1.cpp
+  src/autocode/deriv4.cpp src/autocode/lresc.cpp)
 
 #option(WITH_RANGE_COULOMB "Range separated Coulomb" on)
 if(WITH_RANGE_COULOMB)
@@ -86,7 +87,7 @@ if(WITH_RANGE_COULOMB)
 endif(WITH_RANGE_COULOMB)
 
 if(WITH_POLYNOMIAL_FIT)
-  set(cintSrc ${cintSrc} src/polyfits.c src/sr_rys_polyfits.c)
+  set(cintSrc ${cintSrc} src/polyfits.cpp src/sr_rys_polyfits.cpp)
   add_definitions(-DWITH_POLYNOMIAL_FIT)
   message("Enabled WITH_POLYNOMIAL_FIT")
 endif(WITH_POLYNOMIAL_FIT)
@@ -96,7 +97,7 @@ if(WITH_COULOMB_ERF)
 endif(WITH_COULOMB_ERF)
 
 if(WITH_F12)
-  set(cintSrc ${cintSrc} src/g2e_f12.c src/stg_roots.c src/cint2e_f12.c)
+  set(cintSrc ${cintSrc} src/g2e_f12.cpp src/stg_roots.cpp src/cint2e_f12.cpp)
   add_definitions(-DWITH_F12)
   message("Enabled WITH_F12")
 endif(WITH_F12)
@@ -111,7 +112,7 @@ if(WITH_GTG)
 endif(WITH_GTG)
 
 if(WITH_4C1E)
-  set(cintSrc ${cintSrc} src/cint4c1e.c src/g4c1e.c)
+  set(cintSrc ${cintSrc} src/cint4c1e.cpp src/g4c1e.cpp)
   message("Enabled WITH_4C1E. Note there are bugs in 4c1e integral functions")
 endif(WITH_4C1E)
 

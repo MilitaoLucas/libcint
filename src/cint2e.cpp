@@ -821,7 +821,7 @@ CACHE_SIZE_T CINT2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt
                 size_t len0 = nf*n_comp;
                 size_t cache_size = MAX(leng+len0+nc*n_comp*3 + pdata_size,
                                         nc*n_comp+nf*4);
-                stack = malloc(sizeof(double)*cache_size);
+                stack = (double *)malloc(sizeof(double)*cache_size);
                 cache = stack;
         }
         double *gctr;
@@ -868,7 +868,7 @@ CACHE_SIZE_T CINT2e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt
         }
         return !empty;
 }
-CACHE_SIZE_T CINT2e_spinor_drv(double complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
+CACHE_SIZE_T CINT2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
                       double *cache, void (*f_e1_c2s)(), void (*f_e2_c2s)())
 {
         FINT *shls = envs->shls;
@@ -909,7 +909,7 @@ CACHE_SIZE_T CINT2e_spinor_drv(double complex *out, FINT *dims, CINTEnvVars *env
                 size_t cache_size = MAX(leng+len0+nc*n_comp*3 + pdata_size,
                                      nc*n_comp + n1*envs->ncomp_e2*OF_CMPLX
                                      + nf*32*OF_CMPLX);
-                stack = malloc(sizeof(double)*cache_size);
+                stack = (double *)malloc(sizeof(double)*cache_size);
                 cache = stack;
         }
         double *gctr;
@@ -931,7 +931,7 @@ CACHE_SIZE_T CINT2e_spinor_drv(double complex *out, FINT *dims, CINTEnvVars *env
         }
         FINT nout = dims[0] * dims[1] * dims[2] * dims[3];
         if (!empty) {
-                double complex *opij;
+                double_complex *opij;
                 MALLOC_INSTACK(opij, n1*envs->ncomp_e2);
                 for (n = 0; n < envs->ncomp_tensor; n++) {
                         for (m = 0; m < envs->ncomp_e2; m++) {
@@ -1212,7 +1212,7 @@ CACHE_SIZE_T int2e_cart(double *out, FINT *dims, FINT *shls, FINT *atm, FINT nat
 /*
  * spinor <ki|jl> = (ij|kl); i,j\in electron 1; k,l\in electron 2
  */
-CACHE_SIZE_T int2e_spinor(double complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
+CACHE_SIZE_T int2e_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                  FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
         FINT ng[] = {0, 0, 0, 0, 0, 1, 1, 1};

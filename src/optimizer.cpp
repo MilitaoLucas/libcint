@@ -106,8 +106,8 @@ static FINT *_allocate_index_xyz(CINTOpt *opt, FINT max_l, FINT l_allow, FINT or
                 ll *= LMAX1;
                 cc *= cumcart;
         }
-        FINT *buf = malloc(sizeof(FINT) * cc * 3);
-        FINT **ppbuf = malloc(sizeof(FINT*) * ll);
+        FINT *buf = (FINT *)malloc(sizeof(FINT) * cc * 3);
+        FINT **ppbuf = (FINT **)malloc(sizeof(FINT*) * ll);
         ppbuf[0] = buf;
         for (i = 1; i < ll; i++) {
                 ppbuf[i] = NULL;
@@ -272,8 +272,8 @@ void CINTOpt_set_log_maxc(CINTOpt *opt, FINT *atm, FINT natm,
                 return;
         }
 
-        opt->log_max_coeff = malloc(sizeof(double *) * MAX(nbas, 1));
-        double *plog_maxc = malloc(sizeof(double) * tot_prim);
+        opt->log_max_coeff = (double **)malloc(sizeof(double *) * MAX(nbas, 1));
+        double *plog_maxc = (double *)malloc(sizeof(double) * tot_prim);
         opt->log_max_coeff[0] = plog_maxc;
         for (i = 0; i < nbas; i++) {
                 iprim = bas(NPRIM_OF, i);
@@ -367,8 +367,8 @@ void CINTOpt_setij(CINTOpt *opt, FINT *ng,
         if (tot_prim == 0 || tot_prim > MAX_PGTO_FOR_PAIRDATA) {
                 return;
         }
-        opt->pairdata = malloc(sizeof(PairData *) * MAX(nbas * nbas, 1));
-        PairData *pdata = malloc(sizeof(PairData) * tot_prim * tot_prim);
+        opt->pairdata = (PairData **)malloc(sizeof(PairData *) * MAX(nbas * nbas, 1));
+        PairData *pdata = (PairData *)malloc(sizeof(PairData) * tot_prim * tot_prim);
         opt->pairdata[0] = pdata;
 
         FINT ijkl_inc;
@@ -472,10 +472,10 @@ void CINTOpt_set_non0coeff(CINTOpt *opt, FINT *atm, FINT natm,
                 return;
         }
 
-        opt->non0ctr = malloc(sizeof(FINT *) * MAX(nbas, 1));
-        opt->sortedidx = malloc(sizeof(FINT *) * MAX(nbas, 1));
-        FINT *pnon0ctr = malloc(sizeof(FINT) * tot_prim);
-        FINT *psortedidx = malloc(sizeof(FINT) * tot_prim_ctr);
+        opt->non0ctr = (FINT **)malloc(sizeof(FINT *) * MAX(nbas, 1));
+        opt->sortedidx = (FINT **)malloc(sizeof(FINT *) * MAX(nbas, 1));
+        FINT *pnon0ctr = (FINT *)malloc(sizeof(FINT) * tot_prim);
+        FINT *psortedidx = (FINT *)malloc(sizeof(FINT) * tot_prim_ctr);
         opt->non0ctr[0] = pnon0ctr;
         opt->sortedidx[0] = psortedidx;
         for (i = 0; i < nbas; i++) {

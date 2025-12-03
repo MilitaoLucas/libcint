@@ -281,7 +281,7 @@ CACHE_SIZE_T CINT4c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
                 size_t len0 = envs->nf*n_comp;
                 size_t cache_size = MAX(leng+len0+nc*n_comp*3 + pdata_size,
                                       nc*n_comp+envs->nf*32*OF_CMPLX);
-                stack = malloc(sizeof(double)*cache_size);
+                stack = (double *)malloc(sizeof(double)*cache_size);
                 cache = stack;
         }
         double *gctr;
@@ -346,7 +346,7 @@ CACHE_SIZE_T int4c1e_cart(double *out, FINT *dims, FINT *shls, FINT *atm, FINT n
         return CINT4c1e_drv(out, dims, &envs, opt, cache, &c2s_cart_2e1);
 }
 
-CACHE_SIZE_T int4c1e_spinor(double complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
+CACHE_SIZE_T int4c1e_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                    FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
         fprintf(stderr, "int4c1e_spinor not implemented\n");

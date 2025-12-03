@@ -243,7 +243,7 @@ CACHE_SIZE_T CINT1e_grids_drv(double *out, FINT *dims, CINTEnvVars *envs,
         double *stack = NULL;
         if (cache == NULL) {
                 size_t cache_size = int1e_grids_cache_size(envs);
-                stack = malloc(sizeof(double)*cache_size);
+                stack = (double *)malloc(sizeof(double)*cache_size);
                 cache = stack;
         }
         double *gctr;
@@ -283,7 +283,7 @@ CACHE_SIZE_T CINT1e_grids_drv(double *out, FINT *dims, CINTEnvVars *envs,
         return has_value;
 }
 
-CACHE_SIZE_T CINT1e_grids_spinor_drv(double complex *out, FINT *dims, CINTEnvVars *envs,
+CACHE_SIZE_T CINT1e_grids_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs,
                              double *cache, void (*f_c2s)())
 {
         if (out == NULL) {
@@ -295,7 +295,7 @@ CACHE_SIZE_T CINT1e_grids_spinor_drv(double complex *out, FINT *dims, CINTEnvVar
         double *stack = NULL;
         if (cache == NULL) {
                 size_t cache_size = int1e_grids_cache_size(envs);
-                stack = malloc(sizeof(double)*cache_size);
+                stack = (double *)malloc(sizeof(double)*cache_size);
                 cache = stack;
         }
         double *gctr;
@@ -355,7 +355,7 @@ CACHE_SIZE_T int1e_grids_cart(double *out, FINT *dims, FINT *shls, FINT *atm, FI
         return CINT1e_grids_drv(out, dims, &envs, cache, &c2s_cart_1e_grids);
 }
 
-CACHE_SIZE_T int1e_grids_spinor(double complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
+CACHE_SIZE_T int1e_grids_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                         FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
         FINT ng[] = {0, 0, 0, 0, 0, 1, 0, 1};

@@ -5,10 +5,8 @@
  */
 
 #include <string.h>
-#include <complex.h>
+#include "cint_config.h"
 #include "fblas.h"
-
-#define OF_CMPLX        2
 
 void CINTdset0(FINT n, double *x)
 {
@@ -119,7 +117,7 @@ void CINTdplus_transpose(double *a_t, double *a, FINT m, FINT n)
 /*
  * a[m,n] -> a_t[n,m]
  */
-void CINTzmat_transpose(double complex *a_t, double complex *a, FINT m, FINT n)
+void CINTzmat_transpose(double_complex *a_t, double_complex *a, FINT m, FINT n)
 {
         FINT i, j;
 
@@ -147,13 +145,13 @@ void CINTzmat_transpose(double complex *a_t, double complex *a, FINT m, FINT n)
         }
 }
 
-void CINTzmat_dagger(double complex *a_t, double complex *a, FINT m, FINT n)
+void CINTzmat_dagger(double_complex *a_t, double_complex *a, FINT m, FINT n)
 {
         FINT i, j;
 
         for (i = 0; i < n; i++) {
                 for (j = 0; j < m; j++) {
-                        a_t[i*m+j] = conj(a[j*n+i]);
+                        a_t[i*m+j] = std::conj(a[j*n+i]);
                 }
         }
 }

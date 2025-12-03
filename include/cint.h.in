@@ -207,9 +207,9 @@ typedef struct {
         // in int1e_grids, the pointer for the grids coordinates
         union {double *rl; double *grids;};
 
-        FINT (*f_g0_2e)();
-        void (*f_g0_2d4d)();
-        void (*f_gout)();
+        FINT (*f_g0_2e)(double *g, double *rij, double *rkl, double cutoff, CINTEnvVars *envs);
+        void (*f_g0_2d4d)(double *g, CINTEnvVars *envs);
+        void (*f_gout)(double *gout, double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty);
         CINTOpt *opt;
 
         /* values are assigned during calculation */
