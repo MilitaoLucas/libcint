@@ -32,6 +32,7 @@ typedef FINT (*CINTbreit_func)(double_complex *out, FINT *dims, FINT *shls,
 DECLARE(int2e_##X##_spinor); \
 DECLARE(int2e_gauge_r1_##X##_spinor); \
 DECLARE(int2e_gauge_r2_##X##_spinor); \
+extern "C" { \
 void int2e_breit_##X##_optimizer(CINTOpt **opt, FINT *atm, FINT natm, \
                                  FINT *bas, FINT nbas, double *env) \
 { \
@@ -50,6 +51,7 @@ FINT cint2e_breit_##X##_spinor(double_complex *out, FINT *shls, \
                       CINTOpt *opt) \
 { \
         return int2e_breit_##X##_spinor(out, NULL, shls, atm, natm, bas, nbas, env, opt, NULL); \
+} \
 }
 
 static void _copy_to_out(double_complex *out, double_complex *in, FINT *dims, FINT *counts)

@@ -456,6 +456,8 @@ CACHE_SIZE_T CINT3c1e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *e
 
 void CINTgout1e(double *gout, double *g, FINT *idx, CINTEnvVars *envs, FINT empty);
 
+extern "C" {
+
 CACHE_SIZE_T int3c1e_sph(double *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                  FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
@@ -526,6 +528,7 @@ CACHE_SIZE_T int3c1e_rinv_spinor(double_complex *out, FINT *dims, FINT *shls, FI
         return CINT3c1e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_3c2e1, 1, 0);
 }
 
+} // end extern "C"
 
 ALL_CINT(int3c1e)
 ALL_CINT_FORTRAN_(int3c1e)

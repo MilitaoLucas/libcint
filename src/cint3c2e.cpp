@@ -690,6 +690,8 @@ CACHE_SIZE_T CINT3c2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *e
 }
 
 
+extern "C" {
+
 CACHE_SIZE_T int3c2e_sph(double *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                 FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
@@ -762,6 +764,7 @@ void int3c2e_ssc_optimizer(CINTOpt **opt, FINT *atm, FINT natm,
         int3c2e_optimizer(opt, atm, natm, bas, nbas, env);
 }
 
+} // end extern "C"
 
 
 ALL_CINT(int3c2e)
