@@ -14,6 +14,7 @@
 #include "optimizer.h"
 #include "cint1e.h"
 #include "cint2e.h"
+#include  "cint1e.h"
 #include "misc.h"
 #include "cart2sph.h"
 #include "rys_roots.h"
@@ -448,7 +449,7 @@ CACHE_SIZE_T CINT3c1e_drv(double *out, FINT *dims, CINTEnvVars *envs, CINTOpt *o
 
 // TODO: ssc type c2s transformation
 CACHE_SIZE_T CINT3c1e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *envs, CINTOpt *opt,
-                        double *cache, CINTc2s_func_real f_e1_c2s, FINT int_type, FINT is_ssc)
+                        double *cache, CINTc2s_func_complex f_e1_c2s, FINT int_type, FINT is_ssc)
 {
         fprintf(stderr, "CINT3c1e_spinor_drv not implemented");
         exit(1);
