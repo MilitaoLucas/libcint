@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* (NABLA i j|R12 |k) */
 void CINTgout2e_int3c2e_ip1(double *gout,
 double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty) {
@@ -1370,3 +1372,5 @@ return 0;
 }
 ALL_CINT(int2c2e_ip1ip2)
 ALL_CINT_FORTRAN_(int2c2e_ip1ip2)
+
+} // end extern "C"

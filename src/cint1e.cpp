@@ -357,6 +357,8 @@ void CINTgout1e_nuc(double *gout, double *g, FINT *idx, CINTEnvVars *envs, FINT 
         }
 }
 
+extern "C" {
+
 CACHE_SIZE_T int1e_ovlp_sph(double *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                      FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
@@ -429,6 +431,7 @@ void int1e_nuc_optimizer(CINTOpt **opt, FINT *atm, FINT natm,
         *opt = NULL;
 }
 
+} // end extern "C"
 
 ALL_CINT(int1e_ovlp)
 ALL_CINT(int1e_nuc)

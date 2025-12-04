@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* <NABLA NABLA i|RINV |NABLA NABLA j> */
 void CINTgout1e_int1e_ipiprinvipip(double *gout, double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty) {
 FINT nf = envs->nf;
@@ -974,3 +976,5 @@ return CINT1e_spinor_drv(out, dims, &envs, cache, &c2s_sf_1e, 1);
 } // int1e_ipipipiprinv_spinor
 ALL_CINT1E(int1e_ipipipiprinv)
 ALL_CINT1E_FORTRAN_(int1e_ipipipiprinv)
+
+} // end extern "C"

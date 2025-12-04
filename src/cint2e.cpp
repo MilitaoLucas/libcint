@@ -1183,6 +1183,8 @@ void CINTgout2e(double *gout, double *g, FINT *idx,
 }
 #endif
 
+extern "C" {
+
 CACHE_SIZE_T int2e_sph(double *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
               FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
@@ -1223,6 +1225,7 @@ CACHE_SIZE_T int2e_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *atm
                                  &c2s_sf_2e1, &c2s_sf_2e2);
 }
 
+} // end extern "C"
 
 ALL_CINT(int2e)
 ALL_CINT_FORTRAN_(int2e)

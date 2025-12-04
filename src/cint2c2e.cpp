@@ -348,6 +348,8 @@ CACHE_SIZE_T CINT2c2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *e
 }
 
 
+extern "C" {
+
 CACHE_SIZE_T int2c2e_sph(double *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                 FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
@@ -384,6 +386,7 @@ CACHE_SIZE_T int2c2e_spinor(double_complex *out, FINT *dims, FINT *shls, FINT *a
         return CINT2c2e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_1e);
 }
 
+} // end extern "C"
 
 ALL_CINT(int2c2e)
 ALL_CINT_FORTRAN_(int2c2e)

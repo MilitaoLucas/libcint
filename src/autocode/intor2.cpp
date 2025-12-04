@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* <k G i|R12 |j l> : i,j \in electron 1; k,l \in electron 2
  * = (G i j|R12 |k l) */
 void CINTgout2e_int2e_ig1(double *gout,
@@ -1145,3 +1147,5 @@ return CINT1e_spinor_drv(out, dims, &envs, cache, &c2s_sf_1e, 2);
 } // int1e_inuc_rxp_spinor
 ALL_CINT1E(int1e_inuc_rxp)
 ALL_CINT1E_FORTRAN_(int1e_inuc_rxp)
+
+} // end extern "C"

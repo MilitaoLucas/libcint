@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* <k i|BREIT-R1 |R0 SIGMA DOT P j SIGMA DOT P l> : i,j \in electron 1; k,l \in electron 2
  * = (i R0 SIGMA DOT P j|BREIT-R1 |k SIGMA DOT P l) */
 void CINTgout2e_int2e_gauge_r1_ssp1ssp2(double *gout,
@@ -1614,3 +1616,5 @@ return CINT2e_spinor_drv(out, dims, &envs, opt, cache, &c2s_si_2e1i, &c2s_si_2e2
 } // int2e_gauge_r2_sps1sps2_spinor
 ALL_CINT(int2e_gauge_r2_sps1sps2)
 ALL_CINT_FORTRAN_(int2e_gauge_r2_sps1sps2)
+
+} // end extern "C"

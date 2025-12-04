@@ -7,6 +7,7 @@
 #include "cint_config.h"
 
 #define ALL_CINT_FORTRAN_(NAME) \
+extern "C" { \
 FINT c##NAME##_sph_(double *out, FINT *shls, FINT *atm, FINT *natm, \
                     FINT *bas, FINT *nbas, double *env, size_t optptr_as_integer8) { \
         CINTOpt **opt = (CINTOpt **)optptr_as_integer8; \
@@ -38,9 +39,11 @@ void c##NAME##_optimizer_(size_t optptr_as_integer8, FINT *atm, FINT *natm, \
                          FINT *bas, FINT *nbas, double *env) { \
         CINTOpt **opt = (CINTOpt **)optptr_as_integer8; \
         NAME##_optimizer(opt, atm, *natm, bas, *nbas, env); \
+} \
 }
 
 #define ALL_CINT1E_FORTRAN_(NAME) \
+extern "C" { \
 FINT c##NAME##_sph_(double *out, FINT *shls, FINT *atm, FINT *natm, \
                     FINT *bas, FINT *nbas, double *env) { \
         return NAME##_sph(out, NULL, shls, atm, *natm, bas, *nbas, env, NULL, NULL); \
@@ -54,6 +57,7 @@ FINT c##NAME##_(double *out, FINT *shls, FINT *atm, FINT *natm, \
                 FINT *bas, FINT *nbas, double *env) { \
         return NAME##_spinor((double_complex *)out, NULL, shls, \
                              atm, *natm, bas, *nbas, env, NULL, NULL); \
+} \
 }
 
 #else

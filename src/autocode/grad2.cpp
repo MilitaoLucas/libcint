@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 /* <k NABLA i|R12 |j l> : i,j \in electron 1; k,l \in electron 2
  * = (NABLA i j|R12 |k l) */
 void CINTgout2e_int2e_ip1(double *gout,
@@ -1534,3 +1536,5 @@ return CINT2e_spinor_drv(out, dims, &envs, opt, cache, &c2s_si_2e1, &c2s_si_2e2)
 } // int2e_ipsrsr1srsr2_spinor
 ALL_CINT(int2e_ipsrsr1srsr2)
 ALL_CINT_FORTRAN_(int2e_ipsrsr1srsr2)
+
+} // end extern "C"

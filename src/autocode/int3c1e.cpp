@@ -14,6 +14,8 @@
 #include "cint2e.h"
 #include "misc.h"
 #include "c2f.h"
+
+extern "C" {
 static void CINTgout1e_int3c1e_p2(double *gout,
 double *g, FINT *idx, CINTEnvVars *envs, FINT gout_empty) {
 FINT nf = envs->nf;
@@ -185,3 +187,5 @@ return CINT3c1e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_3c2e1, 0, 0);
 } // int3c1e_ip1_spinor
 ALL_CINT(int3c1e_ip1)
 ALL_CINT_FORTRAN_(int3c1e_ip1)
+
+} // end extern "C"

@@ -12,6 +12,8 @@
 #include "misc.h"
 #include "c2f.h"
 
+extern "C" {
+
 /* based on
  * '("int3c1e_r2_origk" ( \, \, r dot r))
  */
@@ -673,3 +675,5 @@ CACHE_SIZE_T int3c1e_ip1_r6_origk_spinor(double_complex *out, FINT *dims, FINT *
 } // int3c1e_ip1_r6_origk_spinor
 ALL_CINT(int3c1e_ip1_r6_origk)
 ALL_CINT_FORTRAN_(int3c1e_ip1_r6_origk)
+
+} // end extern "C"

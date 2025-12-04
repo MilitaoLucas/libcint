@@ -29,9 +29,12 @@ typedef FINT (*CINTbreit_func)(double_complex *out, FINT *dims, FINT *shls,
                               CINTOpt *opt, double *cache)
 
 #define BREIT0(X, ncomp_tensor) \
+extern "C" { \
 DECLARE(int2e_##X##_spinor); \
 DECLARE(int2e_gauge_r1_##X##_spinor); \
 DECLARE(int2e_gauge_r2_##X##_spinor); \
+} \
+extern "C" { \
 void int2e_breit_##X##_optimizer(CINTOpt **opt, FINT *atm, FINT natm, \
                                  FINT *bas, FINT nbas, double *env) \
 { \
@@ -50,6 +53,7 @@ FINT cint2e_breit_##X##_spinor(double_complex *out, FINT *shls, \
                       CINTOpt *opt) \
 { \
         return int2e_breit_##X##_spinor(out, NULL, shls, atm, natm, bas, nbas, env, opt, NULL); \
+} \
 }
 
 static void _copy_to_out(double_complex *out, double_complex *in, FINT *dims, FINT *counts)
@@ -201,6 +205,9 @@ static void CINTgout2e_int2e_breit_r1p2(double *gout, double *g,
                 }
         }
 }
+
+extern "C" {
+
 void int2e_breit_r1p2_optimizer(CINTOpt **opt, FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env) {
         FINT ng[] = {2, 2, 0, 1, 4, 1, 1, 1};
         CINTall_2e_optimizer(opt, ng, atm, natm, bas, nbas, env);
@@ -229,6 +236,9 @@ CACHE_SIZE_T int2e_breit_r1p2_spinor(double_complex *out, FINT *dims, FINT *shls
         envs.f_gout = &CINTgout2e_int2e_breit_r1p2;
         return CINT2e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_2e1i, &c2s_sf_2e2i);
 } // int2e_breit_r1p2_spinor
+
+} // end extern "C"
+
 ALL_CINT(int2e_breit_r1p2)
 ALL_CINT_FORTRAN_(int2e_breit_r1p2)
 
@@ -290,6 +300,9 @@ static void CINTgout2e_int2e_breit_r2p2(double *gout,
                 }
         }
 }
+
+extern "C" {
+
 void int2e_breit_r2p2_optimizer(CINTOpt **opt, FINT *atm, FINT natm, FINT *bas, FINT nbas, double *env) {
         FINT ng[] = {2, 1, 0, 2, 4, 1, 1, 1};
         CINTall_2e_optimizer(opt, ng, atm, natm, bas, nbas, env);
@@ -318,5 +331,8 @@ CACHE_SIZE_T int2e_breit_r2p2_spinor(double_complex *out, FINT *dims, FINT *shls
         envs.f_gout = &CINTgout2e_int2e_breit_r2p2;
         return CINT2e_spinor_drv(out, dims, &envs, opt, cache, &c2s_sf_2e1i, &c2s_sf_2e2i);
 } // int2e_breit_r2p2_spinor
+
+} // end extern "C"
+
 ALL_CINT(int2e_breit_r2p2)
 ALL_CINT_FORTRAN_(int2e_breit_r2p2)

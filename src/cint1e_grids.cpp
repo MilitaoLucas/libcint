@@ -328,6 +328,8 @@ CACHE_SIZE_T CINT1e_grids_spinor_drv(double_complex *out, FINT *dims, CINTEnvVar
         return has_value;
 }
 
+extern "C" {
+
 CACHE_SIZE_T int1e_grids_sph(double *out, FINT *dims, FINT *shls, FINT *atm, FINT natm,
                      FINT *bas, FINT nbas, double *env, CINTOpt *opt, double *cache)
 {
@@ -364,6 +366,8 @@ CACHE_SIZE_T int1e_grids_spinor(double_complex *out, FINT *dims, FINT *shls, FIN
         envs.f_gout = &CINTgout1e_grids;
         return CINT1e_grids_spinor_drv(out, dims, &envs, cache, &c2s_sf_1e_grids);
 }
+
+} // end extern "C"
 
 ALL_CINT(int1e_grids)
 
