@@ -29,9 +29,11 @@ typedef FINT (*CINTbreit_func)(double_complex *out, FINT *dims, FINT *shls,
                               CINTOpt *opt, double *cache)
 
 #define BREIT0(X, ncomp_tensor) \
+extern "C" { \
 DECLARE(int2e_##X##_spinor); \
 DECLARE(int2e_gauge_r1_##X##_spinor); \
 DECLARE(int2e_gauge_r2_##X##_spinor); \
+} \
 extern "C" { \
 void int2e_breit_##X##_optimizer(CINTOpt **opt, FINT *atm, FINT natm, \
                                  FINT *bas, FINT nbas, double *env) \
