@@ -956,7 +956,7 @@ CACHE_SIZE_T CINT2e_spinor_drv(double_complex *out, FINT *dims, CINTEnvVars *env
  * <ki|jl> = (ij|kl); i,j\in electron 1; k,l\in electron 2
  */
 #if __SSE3__
-#include "gout2e_simd.c"
+#include "gout2e_simd.cpp"
 #else
 void CINTgout2e(double *gout, double *g, FINT *idx,
                 CINTEnvVars *envs, FINT gout_empty)
